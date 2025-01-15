@@ -1,59 +1,39 @@
-# Set up the prompt
+# If you come from bash you might have to change your $PATH.
+# export PATH=$HOME/bin:/usr/local/bin:$PATH
 
-autoload -Uz promptinit
-promptinit
-prompt adam1
+export ZSH="$HOME/.oh-my-zsh"
 
-setopt histignorealldups sharehistory
+ZSH_THEME="jonathan"
 
-# Use emacs keybindings even if our EDITOR is set to vi
-bindkey -e
+plugins=(
+    git
+    archlinux
+    zsh-autosuggestions
+    zsh-syntax-highlighting
+)
 
-# Keep 1000 lines of history within the shell and save it to ~/.zsh_history:
-HISTSIZE=1000
-SAVEHIST=1000
+source $ZSH/oh-my-zsh.sh
+
+# Check archlinux plugin commands here
+# https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/archlinux
+
+#fastfetch -c $HOME/.config/fastfetch/config-compact.jsonc
+
+# Set-up icons for files/folders in terminal
+alias ls='eza -a --icons'
+alias ll='eza -al --icons'
+alias lt='eza -a --tree --level=1 --icons'
+
+# Set-up FZF key bindings (CTRL R for fuzzy history finder)
+source <(fzf --zsh)
+
 HISTFILE=~/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+setopt appendhistory
 
-export PATH=$PATH:/home/encamy/.local/bin
-export DOTNET_ROOT=$HOME/.dotnet
-export PATH=$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools
-export DOTNET_CLI_TELEMETRY_OPTOUT=1
+## [Completion]
+## Completion scripts setup. Remove the following line to uninstall
+[[ -f /home/encamy/.config/.dart-cli-completion/zsh-config.zsh ]] && . /home/encamy/.config/.dart-cli-completion/zsh-config.zsh || true
+## [/Completion]
 
-bindkey "^[[1;2C" forward-word
-bindkey "^[[1;2D" backward-word
-
-# Completion plugin
-# Use modern completion system
-skip_global_compinit=1
-#source /home/encamy/.zshplugins/marlonrichert/zsh-autocomplete/zsh-autocomplete.plugin.zsh
-autoload -Uz compinit
-compinit
-
-zstyle ':completion:*' auto-description 'specify: %d'
-zstyle ':completion:*' completer _expand _complete _correct _approximate
-zstyle ':completion:*' format 'Completing %d'
-zstyle ':completion:*' group-name ''
-zstyle ':completion:*' menu select=2
-eval "$(dircolors -b)"
-zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
-zstyle ':completion:*' list-colors ''
-zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
-zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=* l:|=*'
-zstyle ':completion:*' menu select=long
-zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
-zstyle ':completion:*' use-compctl false
-zstyle ':completion:*' verbose true
-
-zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
-zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
-
-eval "$(oh-my-posh init zsh --config '/home/encamy/.ohmyposh/config.json')"
-
-# Download Znap, if it's not there yet.
-[[ -r ~/.zshplugins/znap/znap.zsh ]] ||
-    git clone --depth 1 -- \
-        https://github.com/marlonrichert/zsh-snap.git ~/.zshplugins/znap
-source ~/.zshplugins/znap/znap.zsh  # Start Znap
-
-alias lc='colorls -lA --sd'
-alias lg='lazygit'
