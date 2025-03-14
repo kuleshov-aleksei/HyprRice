@@ -2,6 +2,9 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 export ZSH="$HOME/.oh-my-zsh"
+export DOTNET_CLI_TELEMETRY_OPTOUT=1
+export DOTNET_ROOT=/usr/share/dotnet
+export PATH=$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools
 
 ZSH_THEME="jonathan"
 
@@ -26,6 +29,10 @@ alias lt='eza -a --tree --level=1 --icons'
 
 # Set-up FZF key bindings (CTRL R for fuzzy history finder)
 source <(fzf --zsh)
+
+export KUBE_EDITOR="nano"
+source <(kubectl completion zsh)
+alias k="kubectl"
 
 HISTFILE=~/.zsh_history
 HISTSIZE=10000

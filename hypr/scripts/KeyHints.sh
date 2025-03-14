@@ -77,5 +77,6 @@ GDK_BACKEND=$BACKEND yad --width=$dynamic_width --height=$dynamic_height \
 "$super SHIFT G" "Gamemode! All animations OFF or ON" "toggle" \
 "$super ," "Rofi Emoticons" "Emoticon" \
 "$super ALT V" "Clipboard Manager" "cliphist" \
+"$super O" "Toggle opacity for current window" "hyprctl dispatch setprop active opaque toggle" \
 "$super H" "Launch this app" "" \
 "" "" ""
